@@ -1,7 +1,6 @@
 import argparse
 import os
-import datetime
-from git import Repo
+from app import GitMiner
 
 # TODO: remove when user preference is done
 parser = argparse.ArgumentParser()
@@ -10,26 +9,14 @@ parser.add_argument('--branch', '-b', help="set git repository branch")
 args = parser.parse_args()
 
 
-def yesterday():
-    return datetime.date.today() - datetime.timedelta(days=1)
-
-
-# TODO: isolate git related staff
-def find_last_n_commits(repo, branch, n, author_email, date):
-    last_n_commits = repo.iter_commits(branch, max_count=n, committer=author_email, after=date)
-    return [commit for commit in last_n_commits]
-
-
 if __name__ == '__main__':
     if args.paths and os.path.isdir(args.paths):
-        repo = Repo(args.paths)
-        assert not repo.bare
-        branch = repo.active_branch
-        if args.branch:
-            branch = args.branch
-        # commits = find_last_n_commits(repo, 'dev', 10, 'rubel.hassan@dsinnovators.com', '2019-12-10')
-        commits = find_last_n_commits(repo, branch, 10, 'rubelhassan@outlook.com', yesterday().isoformat())
+        miner = GitMiner(args.paths)
+        commits = miner.find_author_commits(10, 'rubel.hassan@dsinnovators.com', date='2019-12-10')
+        # commits = miner.find_author_commits(10, 'rubel.hassan@dsinnovators.com', branch='dev', date='2019-12-10')
         for commit in commits:
+            print(commit)
+            print(commit.message, commit.author)
             print(commit.authored_date)
             print(commit.authored_datetime)
 
