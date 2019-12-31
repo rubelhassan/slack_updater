@@ -1,0 +1,30 @@
+{
+  "message": {
+    "blocks": [
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "*Top Task (TT) For The Day:* {tickets}"
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "*Last day’s TT complete:* {yes_no}"
+        }
+      },
+      {
+        "type": "section",
+        "text": {
+          "type": "mrkdwn",
+          "text": "*Any Hurdle:* {yes_no}"
+        }
+      }
+    ]
+  },
+  "variables": {
+    "yes_no": ["Yes", "No"]
+  }
+}
