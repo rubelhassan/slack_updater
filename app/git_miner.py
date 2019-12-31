@@ -8,7 +8,6 @@ class GitMiner:
         assert not self.repo.bare
 
     def find_author_commits(self, max_count, author_email, branch=None, date=None):
-        # last_n_commits = self.repo.iter_commits(branch, max_count=n, committer=author_email, after=date)
         if not date:
             date = self.yesterday().isoformat()
 
