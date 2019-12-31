@@ -25,6 +25,9 @@
     ]
   },
   "variables": {
-    "yes_no": ["Yes", "No"]
+    "yes_no": [
+      "Yes",
+      "No"
+    ]
   }
 }
