@@ -9,12 +9,12 @@ class GitMiner:
 
     def find_author_commits(self, max_count, author_email, branch=None, date=None):
         if not date:
-            date = self.yesterday().isoformat()
+            date = 'midnight'
 
         if branch:
             commits = self.repo.iter_commits(branch, max_count=max_count, committer=author_email, after=date)
         else:
-            commits = self.repo.iter_commits(max_count=max_count, committer=author_email, after=date, all=True)
+            commits = self.repo.iter_commits(max_count=max_count, committer=author_email, since=date, all=True)
 
         return [commit for commit in commits]
 
