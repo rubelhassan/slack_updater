@@ -7,8 +7,8 @@ if __name__ == '__main__':
         status = slack_updater.update_to_slack_channel(tickets)
         if status:
             print("Update posted to channel successfully!")
+        else:
+            print("Update is not posted!")
     except Exception as e:
         print("please configure settings.json")
         print(e)
-
-    print("Done Processing!")

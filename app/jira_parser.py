@@ -11,7 +11,7 @@ class JiraParser:
     def parse_tickets(self):
         tickets = self.TICKET_PATTERNS.findall(' '.join(self.messages))
         tickets = [tuple(filter(lambda x: x is not None and x != '', ticket)) for ticket in tickets]
-        return set([self.ticket_url(ticket[0], ticket[1]) for ticket in tickets])
+        return [self.ticket_url(ticket[0], ticket[1]) for ticket in set(tickets)]
 
     def generate_pattern(self):
         return re.compile('|'.join([f'(({prefix})-[\d]+)' for prefix in self.prefixes]))

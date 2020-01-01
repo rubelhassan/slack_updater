@@ -1,7 +1,5 @@
 import json
-
 import requests
-
 from app import GitMiner, JiraParser, MessageFormatter, AppSettings
 
 
@@ -20,6 +18,8 @@ class SlackUpdater:
 
     def update_to_slack_channel(self, links):
         message = MessageFormatter(links).format_message()
+        if not self.confirm(message):
+            return False
         response = requests.post(self.settings.webhook, json.dumps(message))
         return response.status_code == 200
 
@@ -31,3 +31,8 @@ class SlackUpdater:
         if len(self.commits) <= 0:
             print("No commits are found")
 
+    @staticmethod
+    def confirm(message):
+        print(json.dumps(message, indent=2))
+        response = input("Agree to post: y/n?")
+        return response == 'y' or response == 'Y'
