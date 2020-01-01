@@ -1,7 +1,6 @@
 name: slack_updater
-channels:
-  - defaults
 dependencies:
-  - gitpython=3.0.5
+  - gitpython
+  - requests
   - python=3.8.0
 
