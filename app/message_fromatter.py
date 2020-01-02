@@ -32,14 +32,32 @@ class MessageFormatter:
                 value_map[matches[0]] = self.placeholders[matches[0]]
         return value_map
 
-    @staticmethod
-    def format_ticket_links(ticket_links):
+    def format_ticket_links(self, ticket_links):
+        ticket_links = self.customize_ticket_messages(ticket_links)
         if len(ticket_links) == 1:
             return ticket_links[0]
 
         return ''.join(['\n\t• ' + link for link in ticket_links])
 
+    @staticmethod
+    def customize_ticket_messages(tickets):
+        user_tickets = []
+        for ticket in tickets:
+            customized = input("Type message like: custom message for {ticket} or Press ENTER to skip\n")
+            if customized and customized.strip():
+                customized = customized.format(ticket=ticket)
+            else:
+                customized = ticket
+            user_tickets.append(customized)
+        return user_tickets
+
     def load_placeholders(self):
         for variable in self.message_json['variables']:
-            # TODO: if variable has multiple options let's uer decide
-            self.placeholders[variable] = self.message_json['variables'][variable][0]
+            self.placeholders[variable] = self.determine_variable_value(variable,
+                                                                        self.message_json['variables'][variable])
+
+    @staticmethod
+    def determine_variable_value(variable, values):
+        if values == 1:
+            return values[0]
+        return input(f'select any of {values} for {variable}\n')

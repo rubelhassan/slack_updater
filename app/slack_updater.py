@@ -10,7 +10,6 @@ class SlackUpdater:
         assert len(self.settings.repositories) > 0
         self.commits = []
         self.load_recent_commits()
-        assert len(self.commits) > 0
 
     def parse_tickets_from_commits(self, parser: JiraParser):
         parser.initialize([commit.message for commit in self.commits], self.settings.ticket_map)
